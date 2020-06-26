@@ -47,6 +47,12 @@ h1, h2 {
 }
 @media (max-width: 1580px){
   .container{
+    padding: 0 30px;
+    width: calc(100% - 60px);
+  }
+}
+@media (max-width: 768px){
+  .container{
     padding: 0 15px;
     width: calc(100% - 30px);
   }
