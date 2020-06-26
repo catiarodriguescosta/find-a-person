@@ -1,19 +1,89 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Noto+Sans:wght@400;700&display=swap');
+
+:root {
+  --colour-primary: #231f20;
+  --colour-secondary: #fff;
+  --colour-tertiary: #007ea8; 
+  --colour-quaternary: #ef6c01; /*background*/
+
+  --font-primary: 'DM Sans', sans-serif;
+  --font-secondary: 'Noto Sans', sans-serif;
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html {
+  box-sizing: border-box;
+  min-height: 100%;
+  background: white;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+body {
+  position: relative;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--colour-primary);
+  font-family: var(--font-primary);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1 {
+  font-size: 46px;
+}
+
+h2 {
+  font-size: 32px;
+}
+
+h1, h2 {
+  font-family: var(--font-primary);
+  font-weight: 700;
+}
+
+.container{
+  width: 100%;
+  max-width: 1580px;
+  margin: auto;
+}
+@media (max-width: 1580px){
+  .container{
+    padding: 0 15px;
+    width: calc(100% - 30px);
   }
 }
 
-.App-header {
+h2{
+  margin:  10px 0;
+}
+
+p {
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.App {
+  text-align: left;
+}
+
+.AppHeader {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -24,15 +94,5 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+
