@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import Person from './Person';
 import InputField from './InputField';
+import ReactPaginate from 'react-paginate';
 
 const PersonsFinderSection = styled.section`
     display: flex;
@@ -13,7 +14,7 @@ const PersonsFinderSection = styled.section`
 const Sidebar = styled.div`
     width: 100%;
     margin-bottom: 50px;
-    
+
     @media (min-width: 768px){
         max-width: 400px;
     }
@@ -46,6 +47,8 @@ function PersonsFinder() {
     const [filterByName, setFilterByName] = useState("");
     const [filterByAge, setFilterByAge] = useState("");
     const [filterByGender, setFilterByGender] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+
     
     useEffect( () => {
 
@@ -87,19 +90,32 @@ function PersonsFinder() {
             person.age >= AgeRange[0] && person.age <= AgeRange[1]
         );
     }
-                
+
+    const personsPerPage = 6;
+    const totalPages = Math.ceil(filteredPosts.length / personsPerPage );
+    let currentPagePersons = filteredPosts.slice( (currentPage-1)*personsPerPage , personsPerPage*currentPage);
+    
+    const handlePageClick = data => {
+        let selected = data.selected;
+        setCurrentPage(selected+1);
+    };
+
+
+
 
   return (
     <PersonsFinderSection>
         <Sidebar>
             <h2>Refine</h2>
             <InputField
+                key="name"
                 label= "Name"
                 name="name"
                 type="text"
                 onChange={ event => setFilterByName(event.target.value)}
             />
             <InputField
+                key="age"
                 label= "Age"
                 name= "age"
                 type="select"
@@ -107,6 +123,7 @@ function PersonsFinder() {
                 options= { ["","0-10", "10-20", "20-30", "30-40", "40-50"] }            
             />
             <InputField
+                key="gender"
                 label= "Gender"
                 name="gender"
                 type="radio"
@@ -124,7 +141,7 @@ function PersonsFinder() {
                 <div>
                     <h2>{filteredPosts.length} results</h2>
                     <GridWrapper>
-                    { filteredPosts.length >0  && filteredPosts.map( (post, index) => {
+                    { currentPagePersons.length >0  && currentPagePersons.map( (post, index) => {
                         return <Person 
                             key={index} 
                             name={post.name} 
@@ -136,6 +153,16 @@ function PersonsFinder() {
                         })
                     }
                     </GridWrapper>
+                    <ReactPaginate 
+                        previousLabel={''}
+                        nextLabel={'Next'}
+                        breakLabel={'...'}
+                        pageCount={ totalPages }
+                        pageRangeDisplayed={10}
+                        onPageChange={(data)=>handlePageClick(data)}
+                        containerClassName={'pagination'}
+                        activeClassName={'active'}
+                    />
                 </div>
             }
         </Grid>

@@ -90,7 +90,7 @@ function InputField(props) {
         {props.type==="radio" &&
             props.options && props.options.map( (option, index) =>{
                 return (
-                    <RadioItem key={props.name + index} class="radio-item" onChange={props.onChange}>
+                    <RadioItem key={props.name + index} onChange={props.onChange}>
                         <input type="radio" id={props.name + index} name={props.name} value={option} />
                         <label for={props.name + index}>{option}</label>
                     </RadioItem>   
