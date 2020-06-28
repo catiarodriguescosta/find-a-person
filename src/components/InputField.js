@@ -22,12 +22,36 @@ const Input = styled.input`
     font-weight: 400;
 `
 const Select = styled.select`
+
     border: 1px solid var(--colour-quaternary);
     height: 40px;
     padding: 1px 10px;
     font-family: var(--font-secondary);
     font-size: 16px;
     font-weight: 400;
+
+    /* RESET */    
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    /* ARROW */ 
+    background-image:
+        linear-gradient(45deg, transparent 50%, white 50%),
+        linear-gradient(135deg, white 50%, transparent 50%),
+        linear-gradient(to right, var(--colour-quaternary), var(--colour-quaternary));
+    background-position:
+        calc(100% - 20px) calc(1em + 2px),
+        calc(100% - 15px) calc(1em + 2px),
+        100% 0;
+    background-size:
+        5px 5px,
+        5px 5px,
+        2.5em 2.5em;
+    background-repeat: no-repeat;
+
 `
 const RadioItem = styled.div`
     display: inline-block;

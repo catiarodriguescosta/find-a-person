@@ -4,7 +4,9 @@
   --colour-primary: #231f20;
   --colour-secondary: #fff;
   --colour-tertiary: #007ea8; 
-  --colour-quaternary: #ef6c01; /*background*/
+  --colour-quaternary: #ef6c01; 
+  --colour-quinary: #bf5600;
+
 
   --font-primary: 'DM Sans', sans-serif;
   --font-secondary: 'Noto Sans', sans-serif;
@@ -23,8 +25,9 @@ body {
   font-weight: 700;
   color: var(--colour-primary);
   font-family: var(--font-primary);
-  -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1 {
@@ -39,6 +42,7 @@ h1, h2 {
   font-family: var(--font-primary);
   font-weight: 700;
 }
+
 
 .container{
   width: 100%;

@@ -4,6 +4,7 @@ import axios from 'axios';
 import Person from './Person';
 import InputField from './InputField';
 import ReactPaginate from 'react-paginate';
+import filterImg from '../img/filter.svg';
 
 const PersonsFinderSection = styled.section`
     display: flex;
@@ -23,6 +24,45 @@ const Sidebar = styled.div`
         margin-right: 55px;
     }
 `
+const SidebarTitle = styled.h2`
+    position: relative;
+    &.collapsible {
+        width:  177px;
+        height:  25px;
+        font-size: 20px;
+        text-align: center;
+        background: var(--colour-quaternary);
+        color: var(--colour-secondary);
+        padding: 10px 0;
+        border-radius: 5px;
+        cursor: pointer;
+        :hover{
+            background: var(--colour-quinary);
+        }
+        ::after{
+            position: absolute;
+            right: 10px;
+            content: url(${filterImg});       
+            background-size: 25px 25px;
+            height: 25px;
+            width: 25px;
+        }
+    }
+
+    &.open {
+        background: ${props => (props.open ? "var(--colour-quinary)": "none")};;
+    }
+
+`
+const SidebarFilters = styled.div`
+    transition: 0.25s height ease-in;
+
+    &.hidden {
+        opacity: 0;
+        height: 0;
+    }
+`
+
 const Grid = styled.div`
     display: flex;
     flex-direction: column;
@@ -48,10 +88,14 @@ function PersonsFinder() {
     const [filterByAge, setFilterByAge] = useState("");
     const [filterByGender, setFilterByGender] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const [filtersCollapsed, setFiltersCollapsed] = useState(true);
+    const [innerWidth, setInnerWidth] = useState(window.innerWidth);
 
+    
     
     useEffect( () => {
 
+        window.addEventListener('resize', handleWindowSizeChange);
         axios({
             method: 'GET',
             url: 'https://randomuser.me/api/?results=200'
@@ -72,6 +116,11 @@ function PersonsFinder() {
         });
     }, []);
 
+    const handleWindowSizeChange = () => {
+        setInnerWidth(window.innerWidth);
+    };
+
+    const showFiltersCollapsedVersion = innerWidth <= 992;
 
     let filteredPosts = [...posts];
     if (filterByName !== ""){
@@ -106,30 +155,32 @@ function PersonsFinder() {
   return (
     <PersonsFinderSection>
         <Sidebar>
-            <h2>Refine</h2>
-            <InputField
-                key="name"
-                label= "Name"
-                name="name"
-                type="text"
-                onChange={ event => setFilterByName(event.target.value)}
-            />
-            <InputField
-                key="age"
-                label= "Age"
-                name= "age"
-                type="select"
-                onChange={ event => setFilterByAge(event.target.value)}
-                options= { ["","0-10", "10-20", "20-30", "30-40", "40-50"] }            
-            />
-            <InputField
-                key="gender"
-                label= "Gender"
-                name="gender"
-                type="radio"
-                onChange={ event => setFilterByGender(event.target.value)}
-                options = { ["male", "female"] }
-            />
+            <SidebarTitle open={!filtersCollapsed} showFiltersCollapsedVersion={showFiltersCollapsedVersion} onClick={() =>setFiltersCollapsed(!filtersCollapsed)}  className={ showFiltersCollapsedVersion ? "collapsible" : null }>Refine</SidebarTitle>
+            <SidebarFilters className={showFiltersCollapsedVersion && filtersCollapsed ? "hidden" : null } >
+                <InputField
+                    key="name"
+                    label= "Name"
+                    name="name"
+                    type="text"
+                    onChange={ event => setFilterByName(event.target.value)}
+                />
+                <InputField
+                    key="age"
+                    label= "Age"
+                    name= "age"
+                    type="select"
+                    onChange={ event => setFilterByAge(event.target.value)}
+                    options= { ["","0-10", "10-20", "20-30", "30-40", "40-50"] }            
+                />
+                <InputField
+                    key="gender"
+                    label= "Gender"
+                    name="gender"
+                    type="radio"
+                    onChange={ event => setFilterByGender(event.target.value)}
+                    options = { ["male", "female"] }
+                />
+            </SidebarFilters>
         </Sidebar> 
     
         <Grid>
